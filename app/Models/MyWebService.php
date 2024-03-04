@@ -151,4 +151,30 @@ class MyWebService
             return $this->setBadResponse($e);
         }
     }
+
+    public function postFile($filePath, string $query = null) {
+        $fullURL = $this->fullURL . ($query ? $query : '');
+        $accessToken = Session::get('token');
+
+        try {
+            $response = $this->client->post($fullURL, [
+                RequestOptions::HEADERS => [
+                    'Authorization' => 'Bearer ' . $accessToken,
+                ],
+                RequestOptions::MULTIPART => [
+                    [
+                        'name' => 'file',
+                        'contents' => fopen($filePath, 'r'),
+                        'filename' => basename($filePath),
+                    ],
+                ],
+            ]);
+
+            return $this->setSuccessResponse($response);
+        } catch (ClientException $e) {
+            return $this->setBadResponse($e);
+        } catch (RequestException $e) {
+            return $this->setBadResponse($e);
+        }
+    }
 }
