@@ -36,4 +36,12 @@ class UserService extends MyWebService
 
         return $this->put($payload, '/me/password');
     }
+
+    public function addNewUser($payload) {
+        return $this->post($payload);
+    }
+
+    public function importUsersFromExcel($filePath) {
+        return $this->postFile($filePath, '?import=excel');
+    }
 }

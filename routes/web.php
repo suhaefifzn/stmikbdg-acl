@@ -18,9 +18,17 @@ Route::controller(AuthController::class)
  * ! harap tidak mengubah nilai pada name('home');
  */
 Route::controller(DashboardController::class)
-    ->middleware('auth.token')
+    ->middleware(['auth.token', 'auth.admin'])
     ->group(function () {
         Route::get('/home', 'index')->name('home');
+
+        // manage users
+        Route::prefix('users')
+            ->group(function () {
+                Route::get('/', 'users');
+                Route::post('/add', [UserController::class, 'addUser']);
+                Route::post('/import-excel', [UserController::class, 'addUserFromExcel']);
+            });
 
         // Manage user access
         Route::prefix('user-access')

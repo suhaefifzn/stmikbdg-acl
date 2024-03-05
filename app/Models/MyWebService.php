@@ -51,10 +51,12 @@ class MyWebService
         $decodedResponse = json_decode($response->getResponse()->getBody());
         $statusCode = $response->getResponse()->getStatusCode();
         $message = isset($decodedResponse->message) ? $decodedResponse->message : null;
+        $errors = isset($decodedResponse->errors) ? $decodedResponse->errors : null;
 
         return response()->json([
             'status' => 'fail',
             'message' => $message,
+            'errors' => $errors,
         ], $statusCode);
     }
 

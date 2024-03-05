@@ -30,6 +30,15 @@ class DashboardController extends Controller
         ]);
     }
 
+    public function users() {
+        $users = $this->userService->getAllUsers()->getData('data')['data']['users'];
+
+        return view('dashboard.users.index', [
+            'title' => 'Manage Users',
+            'users' => $users,
+        ]);
+    }
+
     public function userAccess() {
         $sites = $this->siteService->getAllSites()->getData('data')['data']['sites'];
         $users = $this->userService->getAllUsers()->getData('data')['data']['users'];
