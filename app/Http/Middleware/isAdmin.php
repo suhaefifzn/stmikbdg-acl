@@ -16,7 +16,7 @@ class isAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Session::get('role')['is_admin']) {
+        if (isset(Session::get('role')['is_admin']) and Session::get('role')['is_admin']) {
             return $next($request);
         }
 
