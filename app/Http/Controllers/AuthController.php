@@ -18,32 +18,34 @@ class AuthController extends Controller
     }
 
     public function checkToken(Request $request) {
-        $token = $request->query('token');
-        $role = $request->query('role');
+        if (!$request->query('token') and !$request->query('role')) {
+            $token = $request->query('token');
+            $role = $request->query('role');
 
-        if (!$token) {
-            return self::redirectToLogin();
+            if (!$token) {
+                return self::redirectToLogin();
+            }
+
+            $checkToken = $this->service->checkToken($token);
+
+            if ($checkToken->getData('data')['status'] !== 'success') {
+                return redirect()->route('logout');
+            }
+
+            // save token to session
+            Session::put('token', $token);
+
+            // get user profile
+            $userService = new UserService();
+            $user = $userService->getMyProfile()->getData('data')['data'];
+            $userProfile = $user['profile'];
+
+            // save user data to session, data is array
+            Session::put('role', [$role => true]);
+            Session::put('profile', $userProfile);
+            Session::put('user_image', $user['account']['image']);
+            Session::put('user_email', $user['account']['email']);
         }
-
-        $checkToken = $this->service->checkToken($token);
-
-        if ($checkToken->getData('data')['status'] !== 'success') {
-            return redirect()->route('logout');
-        }
-
-        // save token to session
-        Session::put('token', $token);
-
-        // get user profile
-        $userService = new UserService();
-        $user = $userService->getMyProfile()->getData('data')['data'];
-        $userProfile = $user['profile'];
-
-        // save user data to session, data is array
-        Session::put('role', [$role => true]);
-        Session::put('profile', $userProfile);
-        Session::put('user_image', $user['account']['image']);
-        Session::put('user_email', $user['account']['email']);
 
         return redirect()->route('home');
     }
