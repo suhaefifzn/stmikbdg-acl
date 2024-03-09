@@ -18,7 +18,7 @@ class AuthController extends Controller
     }
 
     public function checkToken(Request $request) {
-        if (!$request->query('token') and !$request->query('role')) {
+        if ($request->query('token') and $request->query('role')) {
             $token = $request->query('token');
             $role = $request->query('role');
 

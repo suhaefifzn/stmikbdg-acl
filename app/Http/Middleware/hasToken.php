@@ -37,6 +37,6 @@ class hasToken
             return $next($request);
         }
 
-        return redirect()->route('check');
+        return redirect()->route('logout');
     }
 }
