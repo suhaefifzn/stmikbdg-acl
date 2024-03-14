@@ -44,4 +44,8 @@ class UserService extends MyWebService
     public function importUsersFromExcel($filePath) {
         return $this->postFile($filePath, '?import=excel');
     }
+
+    public function deleteUserByUserId($userId) {
+        return $this->delete(null, "/$userId");
+    }
 }

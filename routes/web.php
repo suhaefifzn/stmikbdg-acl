@@ -28,6 +28,7 @@ Route::controller(DashboardController::class)
                 Route::get('/', 'users');
                 Route::post('/add', [UserController::class, 'addUser']);
                 Route::post('/import-excel', [UserController::class, 'addUserFromExcel']);
+                Route::delete('/delete', [UserController::class, 'deleteUser']);
             });
 
         // Manage user access

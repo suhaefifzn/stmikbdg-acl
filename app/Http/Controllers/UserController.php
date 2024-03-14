@@ -61,4 +61,14 @@ class UserController extends Controller {
 
         return $response;
     }
+
+    public function deleteUser(Request $request) {
+        $request->validate([
+            'user_id' => 'required'
+        ]);
+
+        $response = $this->service->deleteUserByUserId($request->user_id);
+
+        return $response;
+    }
 }

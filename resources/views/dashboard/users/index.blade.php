@@ -45,7 +45,7 @@
                                     <button class="badge bg-info border-0" title="View" data-user="{{ $user['kd_user'] }}" onclick="viewUser(this)">
                                         <i data-feather="eye" style="width: 1.3em"></i>
                                     </button>
-                                    <button class="badge bg-danger border-0" title="Delete" data-user="{{ $user['kd_user'] }}" onclick="deleteUser(this)">
+                                    <button class="badge bg-danger border-0" title="Delete" data-user="{{ $user['id'] }}" data-token="{{ csrf_token() }}" onclick="deleteUser(this)">
                                         <i data-feather="x-circle" style="width: 1.3em"></i>
                                     </button>
                                 </div>
@@ -427,48 +427,34 @@
     function deleteUser(element) {
         const { dataset } = element;
 
-        return Swal.fire({
-            icon: 'info',
-            text: 'API belum tersedia',
-            toast: true,
-            showConfirmButton: false,
-            timerProgressBar: true,
-            timer: 3000,
-            position: 'top-right',
-        });
-
         Swal.fire({
             icon: 'warning',
             title: 'Peringatan!',
-            text: 'Yakin untuk menghapus akses milik pengguna tersebut?',
+            text: 'Yakin untuk menghapus akun tersebut?',
             confirmButtonText: 'Ya',
             cancelButtonText: 'Tidak',
             showCancelButton: true,
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
-                    url: '/user-access/delete',
+                    url: '/users/delete',
                     type: 'DELETE',
                     data: {
-                        user_id: dataset.user,
-                        site_id: dataset.site,
                         _token: dataset.token,
+                        user_id: dataset.user,
                     },
                     success: (response, status, xhr) => {
                         Swal.fire({
                             title: 'Sukses!',
                             icon: 'success',
-                            text: 'Akses pengguna berhasil dihapus',
+                            text: 'Akun pengguna berhasil dihapus',
                             toast: true,
                             showConfirmButton: false,
                             timerProgressBar: true,
-                            timer: 1500,
+                            timer: 1000,
                             position: 'top-right',
                         }).then(() => {
-                            $('#formSelectWeb #selectWeb')
-                                .find(`option[value="${dataset.site}"]`)
-                                .prop('selected', true);
-                            $('#formSelectWeb').trigger('submit');
+                            location.reload();
                         })
                     },
                     error: (xhr, status) => {
