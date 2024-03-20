@@ -39,9 +39,17 @@ class AuthController extends Controller
             $userService = new UserService();
             $user = $userService->getMyProfile()->getData('data')['data'];
             $userProfile = $user['profile'];
+            $userAccount = $user['account'];
 
-            // save user data to session, data is array
-            Session::put('role', [$role => true]);
+            // verify role
+            if ($userAccount[$role]) {
+                Session::put('role', [$role => true]);
+            } else {
+                return self::changeUserRole();
+            }
+
+            // save user data to session
+            Session::put('account', $userAccount);
             Session::put('profile', $userProfile);
             Session::put('user_image', $user['account']['image']);
             Session::put('user_email', $user['account']['email']);
@@ -60,6 +68,17 @@ class AuthController extends Controller
         }
 
         return self::redirectToLogout();
+    }
+
+    public function changeUserRole() {
+        $tempSessionRole = Session::get('account');
+        $data = [
+            'roles' => array_filter($tempSessionRole, function ($item) {
+                return is_bool($item) && $item === true;
+            }),
+        ];
+
+        return view('auth.roles', $data);
     }
 
     private function redirectToLogin() {

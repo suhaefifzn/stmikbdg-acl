@@ -11,6 +11,7 @@ Route::controller(AuthController::class)
     ->group(function () {
         Route::get('/', 'checkToken')->name('check');
         Route::get('/logout', 'logout')->name('logout'); // gunakan untuk logout
+        Route::get('/roles', 'changeUserRole')->middleware('auth.token');
     });
 
 /**
