@@ -53,9 +53,15 @@ class AuthController extends Controller
             Session::put('profile', $userProfile);
             Session::put('user_image', $user['account']['image']);
             Session::put('user_email', $user['account']['email']);
-        }
 
-        return redirect()->route('home');
+            return redirect()->route('home');
+        } else {
+            if (Session::has('role') and Session::has('token')) {
+                return redirect()->route('home');
+            }
+
+            return self::redirectToVerifyPage();
+        }
     }
 
     public function logout() {
@@ -79,6 +85,12 @@ class AuthController extends Controller
         ];
 
         return view('auth.roles', $data);
+    }
+
+    private function redirectToVerifyPage() {
+        return redirect()->away(
+            config('myconfig.login.base_url') . 'verify?site=' . config('app.url')
+        );
     }
 
     private function redirectToLogin() {
