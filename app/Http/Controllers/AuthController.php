@@ -56,7 +56,7 @@ class AuthController extends Controller
 
             return redirect()->route('home');
         } else {
-            if (Session::has('role') and Session::has('token')) {
+            if (Session::exists('role') and Session::exists('token')) {
                 return redirect()->route('home');
             }
 
