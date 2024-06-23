@@ -1,9 +1,20 @@
-<div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="width: 300px;">
+<div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark overflow-hidden" style="width: 300px;">
+    <div id="sidebarDate">
+        <div class="clock-sidebar"></div>
+        <div class="date-sidebar"></div>
+    </div>
+    <hr>
     <a href="/" class="d-flex gap-2 justify-content-center align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-        <span class="fs-4 fw-bold">STMIK Bandung - ACL</span>
+        <div class="d-flex gap-2 align-items-center">
+            <img src="/images/favicons/android-chrome-512x512.png" alt="Logo STMIK Bandung" class="bi pe-none me-2" width="90">
+            <div class="flex-column">
+                <h1 class="fs-5 fw-semibold mb-0">STMIK Bandung</h1>
+                <span>Access Control Level</span>
+            </div>
+        </div>
     </a>
     <hr>
-    <ul class="nav nav-pills flex-column mb-auto">
+    <ul class="nav nav-pills flex-column mb-auto mt-3">
         <li>
             <a
                 href="/home"
@@ -13,22 +24,43 @@
                 Home
             </a>
         </li>
-        <li>
-            <a
-                href="/users"
-                class="nav-link text-white d-flex align-items-center gap-2 {{ Request::is('users') ? 'active' : '' }}"
-            >
+        <li class="mb-1" id="sidebarDropdown">
+            <button class="nav-link text-white d-flex align-items-center gap-2 collapsed w-100 {{ Request::is('users/*') ? 'active' : '' }}" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="true">
                 <i data-feather="users" style="width: 1.2em"></i>
-                Manage Users
-            </a>
+                Users
+            </button>
+            <div class="collapse" id="dashboard-collapse">
+                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 ps-3 small">
+                    <li>
+                        <a href="/users/admin" class="nav-link text-white d-flex align-items-center gap-2 {{ Request::is('users/admin') ? 'active' : '' }}">
+                            Admin
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/users/dosen" class="nav-link text-white d-flex align-items-center gap-2 {{ Request::is('users/dosen') ? 'active' : '' }}">
+                            Dosen
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/users/karyawan" class="nav-link text-white d-flex align-items-center gap-2 {{ Request::is('users/karyawan') ? 'active' : '' }}">
+                            Karyawan
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/users/mahasiswa" class="nav-link text-white d-flex align-items-center gap-2 {{ Request::is('users/mahasiswa') ? 'active' : '' }}">
+                            Mahasiswa
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </li>
         <li>
             <a
-                href="/user-access"
-                class="nav-link text-white d-flex align-items-center gap-2 {{ Request::is('user-access') ? 'active' : '' }}"
+                href="/accesses"
+                class="nav-link text-white d-flex align-items-center gap-2 {{ Request::is('accesses') ? 'active' : '' }}"
             >
                 <i data-feather="check-square" style="width: 1.2em"></i>
-                Manage User Access
+                Accesses
             </a>
         </li>
         <li>

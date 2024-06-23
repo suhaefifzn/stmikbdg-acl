@@ -3,24 +3,27 @@
 namespace App\Http\Controllers;
 
 // * Service
-use App\Models\SiteService;
 use App\Models\UserService;
+use App\Models\SSO\UserService as SSOUserService;
 
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
-    protected $siteService;
     protected $userService;
+    protected $ssoUserService;
 
     public function __construct() {
-        $this->siteService = new SiteService();
         $this->userService = new UserService();
+        $this->ssoUserService = new SSOUserService();
     }
 
     public function index() {
-        return view('dashboard.main', [
-            'title' => 'Home'
+        $userStatistik = $this->ssoUserService->getStatistik()->getData('data')['data'];
+
+        return view('dashboard.home', [
+            'title' => 'Home',
+            'data' => $userStatistik
         ]);
     }
 
@@ -35,17 +38,6 @@ class DashboardController extends Controller
 
         return view('dashboard.users.index', [
             'title' => 'Manage Users',
-            'users' => $users,
-        ]);
-    }
-
-    public function userAccess() {
-        $sites = $this->siteService->getAllSites()->getData('data')['data']['sites'];
-        $users = $this->userService->getAllUsers()->getData('data')['data']['users'];
-
-        return view('dashboard.user-access.index', [
-            'title' => 'Manage User Access',
-            'sites' => $sites,
             'users' => $users,
         ]);
     }

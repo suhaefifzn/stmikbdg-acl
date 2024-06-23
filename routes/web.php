@@ -4,6 +4,10 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SiteController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\Users\AdminController;
+use App\Http\Controllers\Users\DosenController;
+use App\Http\Controllers\Users\KaryawanController;
+use App\Http\Controllers\Users\MahasiswaController;
 use Illuminate\Support\Facades\Route;
 
 // ! Jangan ubah route yang ada dalam group ini
@@ -26,34 +30,60 @@ Route::controller(DashboardController::class)
         // manage users
         Route::prefix('users')
             ->group(function () {
-                Route::get('/', 'users');
-                Route::post('/add', [UserController::class, 'addUser']);
-                Route::post('/import-excel', [UserController::class, 'addUserFromExcel']);
-                Route::delete('/delete', [UserController::class, 'deleteUser']);
+                // admin menu
+                Route::controller(AdminController::class)
+                    ->prefix('admin')
+                    ->group(function () {
+                        Route::get('/', 'index');
+                        Route::post('/add', 'add');
+                        Route::put('/update', 'update');
+                        Route::delete('/delete', 'delete');
+                        Route::get('/detail', 'detail');
+                    });
+
+                // Route::post('/import-excel', [UserController::class, 'addUserFromExcel']);
+
+                // dosen
+                Route::controller(DosenController::class)
+                    ->prefix('dosen')
+                    ->group(function () {
+                        Route::get('/', 'index');
+                    });
+
+                // karyawan
+                Route::controller(KaryawanController::class)
+                    ->prefix('karyawan')
+                    ->group(function () {
+                        Route::get('/', 'index');
+                    });
+
+                // mahasiswa
+                Route::controller(MahasiswaController::class)
+                    ->prefix('mahasiswa')
+                    ->group(function () {
+                        Route::get('/', 'index');
+                    });
             });
 
-        // Manage user access
-        Route::prefix('user-access')
-            ->group(function () {
-                Route::get('/', 'userAccess');
-                Route::post('/add', [SiteController::class, 'addUserSiteAccess']);
-                Route::post('/import-excel', [SiteController::class, 'addUserAccessFromExcel']);
-                Route::delete('/delete', [SiteController::class, 'deleteUserSiteAccess']);
-                Route::get('/users', [SiteController::class, 'getUserBySiteId']);
-                Route::post('/site/add', [SiteController::class, 'addSite']);
+        // manage user access
+        Route::controller(SiteController::class)
+            ->prefix('accesses')
+            ->group (function () {
+                Route::get('/', 'index');
+                Route::post('/user/add', 'addUserSiteAccess');
+                Route::delete('/delete', 'deleteAccess');
+                Route::get('/users', 'getUserBySiteId');
+                Route::post('/site/add', 'addSite');
+
+                Route::get('/render-table', 'renderTable');
+
+                // Route::post('/import-excel', 'addUserAccessFromExcel');
             });
 
         // User account
         Route::prefix('account')
             ->group(function () {
                 Route::get('/', 'account');
-                Route::post('/update', [UserController::class, 'updateEmailAccount']);
                 Route::post('/password/update', [UserController::class, 'updatePasswordAccount']);
             });
     });
-
-/**
- * * Buat route-route baru di bawah ini
- * * Pastikan untuk selalu menggunakan middleware('auth.token')
- * * middleware tersebut digunakan untuk verifikasi access pengguna dengan web
- */
