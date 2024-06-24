@@ -44,3 +44,9 @@
         @endforeach
     </tbody>
 </table>
+
+{{-- Feather Icons --}}
+<script src="/assets/feather-icons/js/feather.min.js"></script>
+<script>
+    feather.replace();
+</script>

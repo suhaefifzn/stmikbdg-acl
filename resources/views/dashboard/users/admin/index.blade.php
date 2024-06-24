@@ -21,15 +21,15 @@
 @endsection
 @section('content')
 {{-- Button add user --}}
-<div class="my-4">
+<div class="my-3">
     <button class="btn btn-primary d-flex gap-1 align-items-center" id="buttonModalAddUser">
         <i data-feather="plus" width="1em"></i>
-        <span>Tambah Admin</span>
+        <span>Tambah Akun Admin</span>
     </button>
 </div>
 
 {{-- Table --}}
-<div class="table-wrapper mt-3">
+<div class="table-wrapper p-3">
     <table id="myTable" class="table table-striped" style="width:100%">
         <thead>
             <tr>
@@ -71,7 +71,7 @@
         <div class="modal-header">
             <h1 class="modal-title fs-5 d-flex align-items-center gap-2" id="modalAddUserLabel">
                 <i data-feather="plus" style="width: 1.3em;"></i>
-                Tambah Admin
+                Tambah Akun Admin
             </h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
@@ -93,16 +93,16 @@
                         <label for="basic-url" class="form-label" for="kd_user">Kode Admin</label>
                         <div class="input-group">
                           <span class="input-group-text" id="basic-addon3">ADM</span>
-                          <input type="text" class="form-control" id="kd_user" aria-describedby="basic-addon3 basic-addon4" name="kd_user" required>
+                          <input type="text" class="form-control" id="kd_user" aria-describedby="basic-addon3 basic-addon4" name="kd_user" autocomplete="off" required>
                         </div>
                     </div>
                     <div class="mb-3">
                         <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" required>
+                        <input type="email" class="form-control" id="email" name="email" autocomplete="off" required>
                     </div>
                     <div class="mb-3">
                         <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="password" name="password" required>
+                        <input type="password" class="form-control" id="password"  name="password" required>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -144,13 +144,13 @@
                         <label for="basic-url" class="form-label" for="kdUserEdit">Kode Admin</label>
                         <div class="input-group">
                           <span class="input-group-text" id="basic-addon3">ADM</span>
-                          <input type="text" class="form-control" id="kdUserEdit" aria-describedby="basic-addon3 basic-addon4" name="kd_user" required>
+                          <input type="text" class="form-control" id="kdUserEdit" aria-describedby="basic-addon3 basic-addon4" name="kd_user" autocomplete="off" required>
                         </div>
                         <div class="error-kd-user"></div>
                     </div>
                     <div class="mb-3">
                         <label for="emailEdit" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="emailEdit" name="email" required>
+                        <input type="email" class="form-control" id="emailEdit" name="email" autocomplete="off" required>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -209,7 +209,6 @@
                     $.LoadingOverlay('hide');
                     Swal.fire({
                         icon: 'success',
-                        title: 'Sukses!',
                         text: 'Admin berhasil ditambahkan',
                         toast: true,
                         timerProgressBar: true,
@@ -227,7 +226,6 @@
                     if (xhr.status === 400) {
                         Swal.fire({
                             icon: 'warning',
-                            title: 'Peringatan!',
                             text: xhr.responseJSON.message,
                             timer: 3000,
                             timerProgressBar: true,
@@ -258,7 +256,6 @@
                     } else {
                         Swal.fire({
                             icon: 'error',
-                            title: 'Error!',
                             text: 'Oops, something wrong. Contact your IT Support',
                             timer: 3000,
                             timerProgressBar: true,
@@ -296,7 +293,6 @@
                     $.LoadingOverlay('hide');
                     Swal.fire({
                         icon: 'success',
-                        title: 'Sukses!',
                         text: 'Admin berhasil diperbarui',
                         toast: true,
                         timerProgressBar: true,
@@ -314,7 +310,6 @@
                     if (xhr.status === 400) {
                         Swal.fire({
                             icon: 'warning',
-                            title: 'Peringatan!',
                             text: xhr.responseJSON.message,
                             timer: 3000,
                             timerProgressBar: true,
@@ -341,7 +336,6 @@
                     } else {
                         Swal.fire({
                             icon: 'error',
-                            title: 'Error!',
                             text: 'Oops, something wrong. Contact your IT Support',
                             timer: 3000,
                             timerProgressBar: true,
@@ -376,7 +370,6 @@
                     },
                     success: (response, status, xhr) => {
                         Swal.fire({
-                            title: 'Sukses!',
                             icon: 'success',
                             text: 'Akun pengguna berhasil dihapus',
                             toast: true,
@@ -392,7 +385,6 @@
                         console.log(xhr);
 
                         Swal.fire({
-                            title: 'Error!',
                             icon: 'error',
                             text: 'Oops, something wrong. Contact your IT Support',
                             toast: true,
@@ -440,7 +432,6 @@
 
                 Swal.fire({
                     icon: 'error',
-                    title: 'Error!',
                     text: 'Oops, something wrong. Contact your IT Support',
                     timer: 3000,
                     timerProgressBar: true,

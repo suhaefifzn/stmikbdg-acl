@@ -48,6 +48,10 @@ Route::controller(DashboardController::class)
                     ->prefix('dosen')
                     ->group(function () {
                         Route::get('/', 'index');
+                        Route::delete('/delete', 'delete');
+                        Route::post('/add', 'add');
+                        Route::get('/detail', 'detail');
+                        Route::put('/update', 'update');
                     });
 
                 // karyawan
@@ -55,6 +59,10 @@ Route::controller(DashboardController::class)
                     ->prefix('karyawan')
                     ->group(function () {
                         Route::get('/', 'index');
+                        Route::delete('/delete', 'delete');
+                        Route::post('/add', 'add');
+                        Route::get('/detail', 'detail');
+                        Route::put('/update', 'update');
                     });
 
                 // mahasiswa
@@ -62,6 +70,10 @@ Route::controller(DashboardController::class)
                     ->prefix('mahasiswa')
                     ->group(function () {
                         Route::get('/', 'index');
+                        Route::delete('/delete', 'delete');
+                        Route::post('/add', 'add');
+                        Route::get('/detail', 'detail');
+                        Route::put('/update', 'update');
                     });
             });
 

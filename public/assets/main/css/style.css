@@ -89,19 +89,23 @@ div.dt-container .dt-paging .dt-paging-button {
 }
 
 #sidebarDate {
-    .clock-sidebar {
-        font-family: 'Arial', sans-serif;
-        color: #bdbdbd;
-        font-size: 24px;
-        text-align: center;
-    }
-    .date-sidebar {
-        font-family: 'Arial', sans-serif;
-        color: #a7a5a5;
-        font-size: 18px;
-        text-align: center;
-        margin-top: 5px;
-    }
+    height: 70px;
+    text-align: center;
+}
+
+#sidebarDate .clock-sidebar {
+    font-family: 'Arial', sans-serif;
+    color: #bdbdbd;
+    font-size: 24px;
+    text-align: center;
+}
+
+ #sidebarData  .date-sidebar {
+    font-family: 'Arial', sans-serif;
+    color: #a7a5a5;
+    font-size: 18px;
+    text-align: center;
+    margin-top: 5px;
 }
 
 /* Card */

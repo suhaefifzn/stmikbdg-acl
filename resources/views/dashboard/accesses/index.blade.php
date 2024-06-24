@@ -17,7 +17,6 @@
 </div>
 @endsection
 @section('content')
-
 {{-- Form pilih web --}}
 <div class="d-flex justify-content-between align-items-center">
     <div class="col-lg-6">
@@ -262,7 +261,6 @@
                         'lengthMenu': [[5, 10, 15, -1], [5, 10, 15, 'All']],
                         'ordering': false,
                     });
-                    feather.replace();
                 },
                 error: (xhr, status) => {
                     console.log(xhr);
@@ -292,7 +290,19 @@
                 is_secretary: $('#formAddSite #is_secretary').is(':checked') ? true : false,
             };
 
-            // console.log(data); return;
+            // cek checkbox, pilih role minimal 1
+            if ($('#formAddSite input[type="checkbox"]:checked').length === 0) {
+                e.preventDefault();
+                return Swal.fire({
+                    icon: 'warning',
+                    text: 'Mohon tentukan role untuk site yang akan ditambahkan',
+                    toast: true,
+                    timerProgressBar: true,
+                    timer: 1500,
+                    showConfirmButton: false,
+                    position: 'top-right'
+                });
+            }
 
             $.ajax({
                 url: '/accesses/site/add',
